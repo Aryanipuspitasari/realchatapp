@@ -3,7 +3,8 @@ import express from "express";
 import cors from "cors";
 
 // IMPORT MIDDLEWARE
-import {errorHandler} from "./middlewares/errorHandler.js"
+import {errorHandler} from "./middlewares/errorHandler.js";
+import invalidRoutes from "./routes/invalidRoute.js";
 
 // IMPORT CONNECT
 import {connect} from "./connect.js"
@@ -19,6 +20,7 @@ app.use(cors())
 connect();
 
 // R O U T E S
+use.app("*", invalidRoutes)
 
 // M I D D L E W A R E
 app.use(errorHandler);
