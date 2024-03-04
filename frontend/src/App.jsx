@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // IMPORT CONTEXT
-import { Username } from "./context/Username.jsx";
+import { UsernameContext } from "./context/UsernameContext.jsx";
 import { LogInContext } from "./context/LogInContext.jsx";
 
 // IMPORT COMPONENT
@@ -14,11 +14,11 @@ function App() {
 
   return (
     <>
-      <Username.Provider value={{ username, setUsername }}>
+      <UsernameContext.Provider value={{ username, setUsername }}>
         <LogInContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
           <StartSite />
         </LogInContext.Provider>
-      </Username.Provider>
+      </UsernameContext.Provider>
     </>
   );
 }

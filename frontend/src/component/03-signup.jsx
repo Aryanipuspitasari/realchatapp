@@ -1,14 +1,17 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UsernameContext } from "../context/UsernameContext.jsx";
 import { LogInContext } from "../context/LogInContext.jsx";
+import Main from "./05-main.jsx";
 
 function SignUpForm() {
+  const { setUsername } = useContext(UsernameContext);
   const { setIsLoggedIn } = useContext(LogInContext);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-
+  const [isSignedUp, setIsSignedUp] = useState(false);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -39,7 +42,9 @@ function SignUpForm() {
     // Check if the email already exists
     const existingUser = users.find((user) => user.email === formData.email);
     if (existingUser) {
-      alert("User with this email already exists. Please use a different email.");
+      alert(
+        "User with this email already exists. Please use a different email."
+      );
       clearTheForm();
       return;
     }
@@ -59,12 +64,20 @@ function SignUpForm() {
 
       const data = await response.json();
       alert(data.message);
+      const userName = formData.username;
+      setUsername(userName);
+      setIsLoggedIn(true);
+      setIsSignedUp(true);
       clearTheForm();
     } catch (error) {
       console.error("ERROR DURING SIGN UP", error);
       clearTheForm();
     }
   };
+
+  if (isSignedUp) {
+    return <Main />;
+  }
 
   const clearTheForm = () => {
     setFormData({
