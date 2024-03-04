@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { LogInContext } from "../context/LogInContext.jsx";
 
 function SignUpForm() {
@@ -8,7 +8,25 @@ function SignUpForm() {
     email: "",
     password: "",
   });
-  const [message, setMessage] = useState("");
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/users");
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -18,11 +36,13 @@ function SignUpForm() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-  // form validation
-  if (formData.username === "" || formData.email === "" || formData.password === "") {
-    alert("Please fill in all fields before submitting.");
-    return;
-  }
+    // Check if the email already exists
+    const existingUser = users.find((user) => user.email === formData.email);
+    if (existingUser) {
+      alert("User with this email already exists. Please use a different email.");
+      clearTheForm();
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:3001/users/signup", {
@@ -38,9 +58,7 @@ function SignUpForm() {
       }
 
       const data = await response.json();
-      window.alert(data.message);
-      console.log("SIGN UP SUCCESSFUL");
-
+      alert(data.message);
       clearTheForm();
     } catch (error) {
       console.error("ERROR DURING SIGN UP", error);
@@ -59,7 +77,6 @@ function SignUpForm() {
   return (
     <form onSubmit={handleSignUp}>
       <h2>Sign Up</h2>
-      {message && <p>{message}</p>}
       <label>
         Username:
         <input

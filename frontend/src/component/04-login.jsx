@@ -1,32 +1,38 @@
-import { useContext, useState } from "react";
+// LoginForm component
+import { useContext, useState, useEffect } from "react";
 import { LogInContext } from "../context/LogInContext.jsx";
 
 function LoginForm() {
   const { setIsLoggedIn } = useContext(LogInContext);
-
-  // State for form data and message
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
+  const [users, setUsers] = useState([]);
 
-  // Function to handle input changes
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/users");
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Function to handle login form submission
   const handleLogIn = async (event) => {
     event.preventDefault();
-
-    // Form validation
-    if (formData.email === "" || formData.password === "") {
-      alert("Please fill in all fields before submitting.");
-      return;
-    }
-
+  
     try {
       const response = await fetch("http://localhost:3001/users/login", {
         method: "POST",
@@ -35,32 +41,41 @@ function LoginForm() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (!response.ok) {
-        throw new Error("LOG IN FAILED.");
+        throw new Error("Failed to log in");
       }
-
+  
       const data = await response.json();
-      // Update message state with server response
-      window.alert(data.message);
-      console.log("LOG IN SUCCESSFUL");
-
-      // Clear form fields
-      clearTheForm();
+  
+      if (response.status === 200) {
+        window.alert("Login successful");
+        setIsLoggedIn(true);
+        clearTheForm();
+      } else {
+        // Handle specific messages from the backend
+        if (data.message === "User not found") {
+          setMessage("User not found. Please check your email.");
+        } else if (data.message === "Invalid email or password") {
+          setMessage("Invalid email or password. Please try again.");
+        } else {
+          setMessage(data.message);
+        }
+      }
     } catch (error) {
-      console.error("ERROR DURING LOGIN", error);
-      // Clear form fields
-      clearTheForm();
+      console.error("Error during login:", error);
+      setMessage("Failed to log in");
     }
   };
+  
 
-  // Function to clear form fields
   const clearTheForm = () => {
     setFormData({
       email: "",
       password: "",
     });
   };
+
 
   return (
     <form onSubmit={handleLogIn}>
@@ -84,7 +99,6 @@ function LoginForm() {
         />
       </label>
       <button type="submit">Login</button>
-      {/* Display message */}
       {message && <p>{message}</p>}
     </form>
   );
