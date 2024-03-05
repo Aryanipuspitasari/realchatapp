@@ -11,6 +11,7 @@ import {connect} from "./connect.js"
 
 // IMPORT ROUTES
 import userRouter from "./routes/userroute.js";
+import chatRouter from "./routes/chatRoute.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ connect();
 
 // R O U T E S
 app.use("/users", userRouter);
+app.use("/chat", chatRouter)
 app.use("*", invalidRoute);
 
 // M I D D L E W A R E
