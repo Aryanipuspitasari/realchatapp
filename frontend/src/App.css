@@ -5,7 +5,7 @@
 }
 
 .startContainer {
-    padding: 2rem;
+  padding: 2rem;
   background-color: antiquewhite;
   display: flex;
   flex-direction: column;
@@ -20,30 +20,28 @@ header h1 {
   font-size: 3rem;
 }
 
-
 /* FORM */
 form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 form h2 {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 form input {
-    width: 100%;
+  width: 100%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -51,31 +49,109 @@ form input {
 }
 
 form button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-form button:hover{
-    background-color: #0056b3;
+form button:hover {
+  background-color: #0056b3;
 }
 
 .button-start-toggle {
-    position: fixed;
-    bottom: 20rem; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    display: block;
-    width: 200px; 
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #a7b6c5;
-    /* z-index: 999;  */
-  }
+  position: fixed;
+  bottom: 20rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 200px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #a7b6c5;
+  /* z-index: 999;  */
+}
+
+/* MAIN CONTAINER */
+
+.mainContainer {
+  /* border: 5px solid black; */
+  height: 100vh;
+  /* width: 100vw; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mainHeader {
+  /* border: 2px solid blue; */
+}
+
+.mainHeader h1 {
+  text-align: center;
+}
+
+.mainHeader .logoutButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: #a7b6c5;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.mainHeader .logoutButton:hover {
+  transform: scale(1.2);
+}
+
+.chatContainer {
+  padding: 5px;
+  padding: 5px;
+  overflow-y: auto; 
+  max-height: calc(100vh - 100px); 
+}
+
+.chatform {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  height: 50px;
+  margin-bottom: 10px;
+  
+}
+
+.chatform input[type="text"] {
+  flex: 2;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  font-size: 20px;
+}
+
+.chatform .send-button {
+  border: none;
+  border-radius: 5px;
+  background-color: #a7b6c5; 
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  font-size: 20px;
+}
+
+.chatform .send-button:hover {
+  background-color: #8799a3; 
+  transform: scale(1.1); 
+}
