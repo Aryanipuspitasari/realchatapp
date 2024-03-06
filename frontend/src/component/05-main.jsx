@@ -20,10 +20,10 @@ function Main() {
           X
         </button>
       </header>
+
       
-      <div className="chatContainer">
         <Chat />
-      </div>
+   
     </div>
   );
 }

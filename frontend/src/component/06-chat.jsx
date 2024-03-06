@@ -1,12 +1,63 @@
-function Chat() {
-  return (
-    
+import { useState } from "react";
 
-    <div className="chatform">
-      <input type="text" placeholder="Type your message..." />
-      <button className="send-button">Send</button>
+function Chat() {
+  const [inputMessage, setInputMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim()) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: inputMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error("FAILED TO SEND MESSAGE");
+      }
+
+      const data = await response.json();
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { role: "user", content: inputMessage },
+        { role: "bot", content: data.response },
+      ]);
+      setInputMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setInputMessage(event.target.value);
+  };
+  return (
+    <div className="chatContainer">
+      <div className="botContainer">
+        {chatHistory.map((message, index) => (
+          <div key={index} className={`message ${message.role}`}>
+            {message.content}
+          </div>
+        ))}
+      </div>
+      <div className="chatform">
+        <input
+          type="text"
+          placeholder="Type your message..."
+          value={inputMessage}
+          onChange={handleInputChange}
+        />
+        <button className="send-button" onClick={handleSendMessage}>
+          Send
+        </button>
+      </div>
     </div>
-    
   );
 }
 

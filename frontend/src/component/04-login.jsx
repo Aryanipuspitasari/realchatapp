@@ -1,11 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import { LogInContext } from "../context/LogInContext.jsx";
 import Main from "./05-main.jsx";
+import { UsernameContext } from "../context/UsernameContext.jsx";
 
 function LoginForm() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LogInContext);
+  const { setUsername } = useContext(UsernameContext);
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [users, setUsers] = useState([]);
+  const [setUsers] = useState([]);
 
   useEffect(() => {
     fetchUsers();
@@ -40,22 +42,17 @@ function LoginForm() {
         },
         body: JSON.stringify(formData),
       });
-  
-      const responseData = await response.json();
-  
-      if (response.ok) {
-        window.alert("Login successful");
-        setIsLoggedIn(true);
-        clearTheForm();
-      } else {
-        if (response.status === 401) {
-          window.alert("Invalid username or password. Please try again.");
-        } else if (response.status === 404) {
-          window.alert("User not found. Please check your username.");
-        } else {
-          window.alert("Failed to log in. Please try again later.");
-        }
+
+      if(!response.ok){
+        throw new Error("LOGIN FAILED");
       }
+
+      const data = await response.json();
+      console.log(data);
+      const userName = formData.username;
+      setUsername(userName);
+      setIsLoggedIn(true);
+      clearTheForm()
     } catch (error) {
       console.error("Error during login:", error);
       window.alert("Failed to log in. Please try again later.");
