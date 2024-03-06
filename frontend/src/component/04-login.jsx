@@ -4,9 +4,8 @@ import Main from "./05-main.jsx";
 
 function LoginForm() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LogInContext);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [users, setUsers] = useState([]);
-  
 
   useEffect(() => {
     fetchUsers();
@@ -32,7 +31,7 @@ function LoginForm() {
 
   const handleLogIn = async (event) => {
     event.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:3001/users/login", {
         method: "POST",
@@ -41,41 +40,36 @@ function LoginForm() {
         },
         body: JSON.stringify(formData),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to log in");
-      }
-
-      const data = await response.json();
-      console.log(data);
-      // Check if the user exists
-      const userExists = users.find((user) => user.email === formData.email);
-
-      if (!userExists) {
-        window.alert("User not found. Please check your email.");
-        return;
-      }
-
-      if (response.status === 200) {
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
         window.alert("Login successful");
         setIsLoggedIn(true);
         clearTheForm();
-      } else if (response.status === 401) {
-        window.alert("Invalid email or password. Please try again.");
+      } else {
+        if (response.status === 401) {
+          window.alert("Invalid username or password. Please try again.");
+        } else if (response.status === 404) {
+          window.alert("User not found. Please check your username.");
+        } else {
+          window.alert("Failed to log in. Please try again later.");
+        }
       }
     } catch (error) {
       console.error("Error during login:", error);
-      window.alert("Failed to log in");
+      window.alert("Failed to log in. Please try again later.");
     }
   };
+  
 
-   if (isLoggedIn) {
+  if (isLoggedIn) {
     return <Main />;
   }
 
   const clearTheForm = () => {
     setFormData({
-      email: "",
+      username: "",
       password: "",
     });
   };
@@ -84,11 +78,11 @@ function LoginForm() {
     <form onSubmit={handleLogIn}>
       <h2>Login</h2>
       <label>
-        Email:
+        Username:
         <input
-          type="email"
-          name="email"
-          value={formData.email}
+          type="text"
+          name="username"
+          value={formData.username}
           onChange={handleInputChange}
         />
       </label>
@@ -102,7 +96,6 @@ function LoginForm() {
         />
       </label>
       <button type="submit">Login</button>
-      
     </form>
   );
 }

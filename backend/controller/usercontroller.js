@@ -16,6 +16,7 @@ export const signup = async (req, res, next) => {
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
     
+    
     res.status(201).json({ message: "New user created successfully!" });
   } catch (error) {
     console.error("Error during signup", error);
@@ -26,9 +27,9 @@ export const signup = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -42,7 +43,7 @@ export const login = async (req, res, next) => {
 
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
-    console.error("Error during signin", error);
+    console.error("Error during login", error);
     next(error);
   }
 };
@@ -50,7 +51,7 @@ export const login = async (req, res, next) => {
 export const getUsers = async(req, res, next) =>{
   try {
     const users = await User.find();
-    res.status(200).json(users);
+    res.status(200).json(users.username);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Failed to fetch users" });

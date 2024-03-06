@@ -21,18 +21,3 @@ export const userValidator = [
     .isLength({ min: 8 })
     .escape(),
 ];
-
-
-export const userValidatorForLogin = [
-    body("email")
-      .notEmpty()
-      .withMessage("Email is required")
-      .isEmail()
-      .withMessage("Invalid email format")
-      .normalizeEmail(),
-    body("password")
-      .notEmpty()
-      .withMessage("Password is required")
-      .trim()
-      .escape(),
-  ];

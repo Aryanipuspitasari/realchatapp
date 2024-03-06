@@ -9,5 +9,13 @@ const userSchema = new Schema({
     versionKey: false
 });
 
+userSchema.methods.toJSON = function(){
+    const user = this.toObject();
+    delete user._id;
+    delete user.password;
+    delete user.email;
+    return user;
+}
+
 const User = model("User", userSchema, "users");
 export default User;
