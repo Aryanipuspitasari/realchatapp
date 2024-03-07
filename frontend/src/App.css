@@ -81,7 +81,7 @@ form button:hover {
 /* MAIN CONTAINER */
 
 .mainContainer {
-  border: 5px solid black;
+  /* border: 5px solid black; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -89,7 +89,7 @@ form button:hover {
 }
 
 .mainHeader {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .mainHeader h1 {
@@ -113,25 +113,32 @@ form button:hover {
   transform: scale(1.2);
 }
 
-.botContainer{
-  border: 3px solid red;
-  flex-grow: 2;
-}
+
 
 .chatContainer {
-  border: 2px solid orange;
-  padding: 5px;
+  /* border: 2px solid orange; */
+  flex-grow: 2;
   padding: 5px;
   overflow-y: auto; 
-  max-height: calc(100vh - 100px); 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.botContainer{
+  background-color: rgba(290, 204, 204, 0.1);
+  padding: 10px;
+  flex-grow: 2;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .chatform {
   width: 100%;
   display: flex;
   gap: 5px;
-  height: 50px;
-  margin-bottom: 10px;
   
 }
 
@@ -159,4 +166,21 @@ form button:hover {
 .chatform .send-button:hover {
   background-color: #8799a3; 
   transform: scale(1.1); 
+}
+
+.message {
+  padding: 8px;
+  margin: 4px 0;
+  border-radius: 8px;
+}
+
+.message.user {
+  background-color: rgba(204, 230, 255, 0.2);
+  align-self: flex-end;
+}
+
+
+.message.bot {
+  background-color: rgba(240, 240, 240, 0.4);
+  align-self: flex-start; 
 }
