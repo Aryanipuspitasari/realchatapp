@@ -72,7 +72,7 @@ function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleLogIn}>
+    <form onSubmit={handleLogIn} className="signUpLogInForm">
       <h2>Login</h2>
       <label>
         Username:

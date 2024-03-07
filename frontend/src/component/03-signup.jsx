@@ -88,7 +88,7 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSignUp}>
+    <form onSubmit={handleSignUp} className ="signUpLogInForm">
       <h2>Sign Up</h2>
       <label>
         Username:

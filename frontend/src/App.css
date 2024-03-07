@@ -21,7 +21,7 @@ header h1 {
 }
 
 /* FORM */
-form {
+.signUpLogInForm {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -30,17 +30,17 @@ form {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-form h2 {
+.signUpLogInForm h2 {
   margin-bottom: 15px;
 }
 
-form label {
+.signUpLogInForm label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-form input {
+.signUpLogInForm input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -48,7 +48,7 @@ form input {
   border-radius: 5px;
 }
 
-form button {
+.signUpLogInForm button {
   display: block;
   width: 100%;
   padding: 10px;
@@ -59,7 +59,7 @@ form button {
   cursor: pointer;
 }
 
-form button:hover {
+.signUpLogInForm button:hover {
   background-color: #0056b3;
 }
 
@@ -75,13 +75,11 @@ form button:hover {
   border-radius: 5px;
   cursor: pointer;
   background-color: #a7b6c5;
-  /* z-index: 999;  */
 }
 
 /* MAIN CONTAINER */
 
 .mainContainer {
-  /* border: 5px solid black; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -89,7 +87,8 @@ form button:hover {
 }
 
 .mainHeader {
-  /* border: 2px solid blue; */
+  background-color: rgba(290, 204, 204, 0.1);
+  padding: 10px;
 }
 
 .mainHeader h1 {
@@ -98,8 +97,8 @@ form button:hover {
 
 .mainHeader .logoutButton {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -113,20 +112,17 @@ form button:hover {
   transform: scale(1.2);
 }
 
-
-
 .chatContainer {
-  /* border: 2px solid orange; */
   flex-grow: 2;
   padding: 5px;
-  overflow-y: auto; 
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 5px;
 }
 
-.botContainer{
+.botContainer {
   background-color: rgba(290, 204, 204, 0.1);
   padding: 10px;
   flex-grow: 2;
@@ -135,52 +131,76 @@ form button:hover {
   flex-direction: column;
 }
 
-.chatform {
+.chatForm {
   width: 100%;
   display: flex;
   gap: 5px;
-  
+  height: 70px;
 }
 
-.chatform input[type="text"] {
-  flex: 2;
+.chatForm input[type="text"] {
+  flex: 1;
   padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #f0f0f0;
-  font-size: 20px;
+  font-size: 25px;
 }
 
-.chatform .send-button {
+.chatForm .send-button {
   border: none;
   border-radius: 5px;
-  background-color: #a7b6c5; 
+  background-color: #a7b6c5;
   color: white;
   cursor: pointer;
   padding: 5px 10px;
   margin-left: 10px;
   transition: transform 0.3s ease;
-  font-size: 20px;
+  font-size: 25px;
 }
 
-.chatform .send-button:hover {
-  background-color: #8799a3; 
-  transform: scale(1.1); 
+.chatForm .send-button:hover {
+  background-color: #8799a3;
+  transform: scale(1.1);
 }
 
 .message {
   padding: 8px;
   margin: 4px 0;
   border-radius: 8px;
+ 
 }
 
 .message.user {
   background-color: rgba(204, 230, 255, 0.2);
   align-self: flex-end;
+  max-width: 65%;
+  font-size: 25px;
+ display: flex;
+ flex-direction: column;
+ gap: 3px;
 }
-
 
 .message.bot {
   background-color: rgba(240, 240, 240, 0.4);
-  align-self: flex-start; 
+  align-self: flex-start;
+  max-width: 65%;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.message.bot span, 
+.message.user span{
+  font-size: 16px;
+}
+
+.message.bot .messageContent {
+  align-self: flex-start;
+}
+
+.message.bot .messageTime {
+  align-self: flex-end;
+  font-size: 16px;
 }
