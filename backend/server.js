@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // IMPORT MIDDLEWARE
 import {errorHandler} from "./middlewares/errorHandler.js";
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 8000;
 // MIDDLEWARE USE
 app.use(express.json());
 app.use(express.urlencoded( { extended : true } ) );
+app.use(cookieParser);
 app.use(cors())
 connect();
 

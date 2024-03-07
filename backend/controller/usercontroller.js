@@ -1,5 +1,12 @@
+import "dotenv/config";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
+
 import User from "../model/userschema.js";
 import { hashPassword, comparePassword } from "../library/userutils.js";
+
+// Secret key for signing JWTs
+const secretKey = process.env.SECRET_ACCESS_TOKEN;
 
 export const signup = async (req, res, next) => {
   try {
@@ -15,9 +22,12 @@ export const signup = async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
     const user = new User({ username, email, password: hashedPassword });
     await user.save();
+
+    // CREATE TOKEN WITH USERNAME AND USERID
+    const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
     
-    
-    res.status(201).json({ message: "New user created successfully!" });
+    res.cookie("token", token, {httpOnly : true})
+    res.status(201).json({ message: "New user created successfully!", token });
   } catch (error) {
     console.error("Error during signup", error);
     next(error);
@@ -32,7 +42,7 @@ export const login = async (req, res, next) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "User not found or invalid credentials" });
     }
 
     const isPasswordValid = await comparePassword(password, user.password);
@@ -41,6 +51,10 @@ export const login = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    // CREATE TOKEN WITH USERNAME AND USERID
+    const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
+
+    res.cookie("token", token, {httpOnly : true})
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     console.error("Error during login", error);
