@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 // IMPORT CONTEXT
 import { UsernameContext } from "./context/UsernameContext.jsx";
@@ -11,6 +12,14 @@ import "./App.css";
 function App() {
   const [username, setUsername] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+
+    if(token){
+      setIsLoggedIn(true);
+    }
+  }, [])
 
   return (
     <>

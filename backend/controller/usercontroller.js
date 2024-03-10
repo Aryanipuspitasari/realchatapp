@@ -26,7 +26,7 @@ export const signup = async (req, res, next) => {
     // CREATE TOKEN WITH USERNAME AND USERID
     const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
     
-    res.cookie("token", token, {httpOnly : true})
+    res.cookie("token", token, {httpOnly : true, secure : true})
     res.status(201).json({ message: "New user created successfully!", token });
   } catch (error) {
     console.error("Error during signup", error);
@@ -54,8 +54,8 @@ export const login = async (req, res, next) => {
     // CREATE TOKEN WITH USERNAME AND USERID
     const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
 
-    res.cookie("token", token, {httpOnly : true})
-    res.status(200).json({ message: "Login successful" });
+    res.cookie("token", token, {httpOnly : true, secure : true})
+    res.status(200).json({ message: "Login successful" , token});
   } catch (error) {
     console.error("Error during login", error);
     next(error);
@@ -65,7 +65,7 @@ export const login = async (req, res, next) => {
 export const getUsers = async(req, res, next) =>{
   try {
     const users = await User.find();
-    res.status(200).json(users.username);
+    res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Failed to fetch users" });

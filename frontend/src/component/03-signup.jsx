@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { UsernameContext } from "../context/UsernameContext.jsx";
 import { LogInContext } from "../context/LogInContext.jsx";
 import Main from "./05-main.jsx";
+import Cookies from "js-cookie";
 
 function SignUpForm() {
   const { setUsername } = useContext(UsernameContext);
@@ -66,6 +67,9 @@ function SignUpForm() {
       alert(data.message);
       const userName = formData.username;
       setUsername(userName);
+
+      // Set token cookie after successful signup
+      Cookies.set('token', data.token, { expires: 1 });
       setIsLoggedIn(true);
       setIsSignedUp(true);
       clearTheForm();
