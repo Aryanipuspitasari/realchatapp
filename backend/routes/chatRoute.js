@@ -1,10 +1,11 @@
 import express from "express";
-import { chat } from "../controller/chatController.js";
+import { chat, getUserConversations } from "../controller/chatController.js";
+import { authenticate } from "../middlewares/authenticate.js";
 
 const chatRouter = express.Router()
 chatRouter
     .route("/")
-    .post(chat)
-
+    .get(authenticate, getUserConversations)
+    .post(authenticate, chat)
 
 export default chatRouter;

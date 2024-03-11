@@ -1,72 +1,108 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import Cookies from "js-cookie";
+import { LogInContext } from "../context/LogInContext.jsx";
 
 function Chat() {
+  const { isLoggedIn } = useContext(LogInContext);
   const [inputMessage, setInputMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  
 
-  const getCurrentTime = () => {
-    const currentTime = new Date();
-    const hours = currentTime.getHours().toString().padStart(2, "0");
-    const minutes = currentTime.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchChatHistory();
+    }
+  }, [isLoggedIn]);
+
+  const fetchChatHistory = async () => {
+    try {
+      const token = Cookies.get("token");
+
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const response = await fetch("http://localhost:3001/chat", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+
+      // console.log(response);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch chat history: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      // console.log(data);
+      setChatHistory(data);
+    } catch (error) {
+      console.error("Error fetching chat history:", error);
+    }
   };
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) {
       return;
     }
-  
-    try {
 
-      // Send user message immediately
-      setChatHistory(prevHistory => [...prevHistory, { role: "user", content: inputMessage, time :getCurrentTime() }]);
-  
-      setTimeout(async () => {
-        try {
-          const response = await fetch("http://localhost:3001/chat", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message: inputMessage }),
-          });
-  
-          if (!response.ok) {
-            throw new Error("FAILED TO SEND MESSAGE");
-          }
-  
-          const data = await response.json();
-          setChatHistory(prevHistory => [
-            ...prevHistory,
-            { role: "bot", content: data.response, time: getCurrentTime() }
-          ]);
-        } catch (error) {
-          console.error("ERROR RECEIVING BOT RESPONSE", error);
-        }
-      }, 1000);
-  
-      setInputMessage("");
+    try {
+      const token = Cookies.get("token");
+      if (!token) {
+        throw new Error("Token not found in cookies");
+      }
+
+      const response = await fetch("http://localhost:3001/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ message: inputMessage }),
+      });
+
+      if (!response.ok && response.status !== 401) {
+        throw new Error(`Failed to send message: ${response.statusText}`);
+      }
+      
+      if (response.status === 401) {
+        console.error("Authentication error while sending message");
+        return;
+      }
+
+      const data = await response.json();
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        { role: "bot", content: data.response },
+      ]);
     } catch (error) {
       console.error("Error sending message:", error);
     }
+
+    setInputMessage("");
   };
-  
-  const handleSubmit= (event) => {
+
+  const handleSubmit = (event) => {
     event.preventDefault();
     handleSendMessage();
-  }
+  };
 
   const handleInputChange = (event) => {
     setInputMessage(event.target.value);
   };
+
   return (
     <div className="chatContainer">
       <div className="botContainer">
-        {chatHistory.map((message, index) => (
+        {chatHistory?.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>
-            <p className="messageContent">{message.content}</p>
-            <span className="messageTime">{message.time}</span>
+            <p className="messageContent">{message.userMessage}</p>{" "}
+            {/* Render user message */}
+            <p className="messageContent">{message.botReply}</p>{" "}
+            {/* Render bot reply */}
+            <span className="messageTime">{message.timestamp}</span>{" "}
+            {/* Render timestamp */}
           </div>
         ))}
       </div>

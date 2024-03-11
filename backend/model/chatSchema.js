@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const chatSchema = new Schema({
+const chatSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     userMessage: String,
     botReply: String,
@@ -11,4 +11,5 @@ const chatSchema = new Schema({
 });
 
 const Chat = mongoose.model("Chat", chatSchema, "chats");
+
 export default Chat;

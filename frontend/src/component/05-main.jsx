@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LogInContext } from "../context/LogInContext.jsx";
 import { UsernameContext } from "../context/UsernameContext.jsx";
-import Chat from "./06-chat.jsx";
+import Chat from "./06-chat.jsx"
 import Cookies from "js-cookie";
 
 function Main() {

@@ -15,10 +15,13 @@ function SignUpForm() {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [users, setUsers] = useState([]);
 
+  /**
+   
   useEffect(() => {
     fetchUsers();
   }, []);
 
+  
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:3001/users");
@@ -31,6 +34,7 @@ function SignUpForm() {
       console.error("Error fetching users:", error);
     }
   };
+  */
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

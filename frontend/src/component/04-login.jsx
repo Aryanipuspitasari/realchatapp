@@ -10,9 +10,12 @@ function LoginForm() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [setUsers] = useState([]);
 
+  /**
+   
   useEffect(() => {
     fetchUsers();
   }, []);
+  
 
   const fetchUsers = async () => {
     try {
@@ -26,6 +29,7 @@ function LoginForm() {
       console.error("Error fetching users:", error);
     }
   };
+  */
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -34,34 +38,34 @@ function LoginForm() {
 
   const handleLogIn = async (event) => {
     event.preventDefault();
-  
+
     try {
-      const response = await fetch("http://localhost:3001/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch("http://localhost:3001/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
 
-      if(!response.ok){
-        throw new Error("LOGIN FAILED");
-      }
+        if (!response.ok) {
+            throw new Error("Failed to log in");
+        }
 
-      const data = await response.json();
-      console.log(data);
-      const userName = formData.username;
-      setUsername(userName);
+        const data = await response.json();
+        // console.log(data);
+        const userName = formData.username;
+        setUsername(userName);
 
-      // Set token cookie after successful signup
-      Cookies.set('token', data.token, { expires: 1 });
-      setIsLoggedIn(true);
-      clearTheForm()
+        // Set token cookie after successful login
+        Cookies.set("token", data.token, { expires: 1 });
+        setIsLoggedIn(true);
+        clearTheForm();
     } catch (error) {
-      console.error("Error during login:", error);
-      window.alert("Failed to log in. Please try again later.");
+        console.error("Error during login:", error);
+        alert("Failed to log in. Please try again later.");
     }
-  };
+};
   
 
   if (isLoggedIn) {
