@@ -15,7 +15,7 @@ function SignUpForm() {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [users, setUsers] = useState([]);
 
-  /**
+  
    
   useEffect(() => {
     fetchUsers();
@@ -34,7 +34,7 @@ function SignUpForm() {
       console.error("Error fetching users:", error);
     }
   };
-  */
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

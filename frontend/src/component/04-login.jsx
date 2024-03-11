@@ -10,10 +10,10 @@ function LoginForm() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [setUsers] = useState([]);
 
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+/*
+useEffect(() => {
+  fetchUsers();
+}, []);
   
 
   const fetchUsers = async () => {
@@ -28,6 +28,7 @@ function LoginForm() {
       console.error("Error fetching users:", error);
     }
   };
+  */
 
 
   const handleInputChange = (event) => {
