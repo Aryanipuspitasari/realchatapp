@@ -6,11 +6,9 @@ const secretKey = process.env.SECRET_ACCESS_TOKEN;
 
 export const authenticate = (req, res, next) => {
     const token = req.cookies.token;
-    // console.log(req.cookies);
-    // console.log(token);
 
      if(!token){
-     return res.status(401).send("Access denied. Unauthenticated");
+     return res.status(402).send("Access denied. Unauthenticated");
     }
 
     jwt.verify(token, secretKey, (error, decoded) =>{
