@@ -1,6 +1,5 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 
 import User from "../model/userschema.js";
 import { hashPassword, comparePassword } from "../library/userutils.js";

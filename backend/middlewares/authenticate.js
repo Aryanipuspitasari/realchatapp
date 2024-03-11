@@ -1,6 +1,5 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
-import cookieParser from "cookie-parser";
 
 // Secret key for signing JWTs
 const secretKey = process.env.SECRET_ACCESS_TOKEN;

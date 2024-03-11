@@ -1,5 +1,6 @@
 import "dotenv/config";
 import OpenAI from "openai";
+import Chat from "../model/chatSchema.js";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -15,8 +16,17 @@ export const chat = async (req, res, next) => {
       messages: [{ role: "user", content: message }],
     });
 
+    // Save the user's message and the chatbot's reply to the database
+    const newChat = new Chat({ 
+      user: req.user.id, 
+      userMessage: message,
+      botReply: response.choices[0].message.content 
+    });
+    await newChat.save();
+
     res.json({ response: response.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: "ERROR IN CHAT CONTROLLER." });
+    console.error("Error in chat controller:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
