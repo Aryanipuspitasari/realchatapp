@@ -28,14 +28,11 @@ function Chat() {
         credentials: "include",
       });
 
-      // console.log(response);
-
       if (!response.ok) {
         throw new Error(`Failed to fetch chat history: ${response.statusText}`);
       }
 
       const data = await response.json();
-      // console.log(data);
       setChatHistory(data);
     } catch (error) {
       console.error("Error fetching chat history:", error);
@@ -52,24 +49,14 @@ function Chat() {
 
 
       const response = await fetch("http://localhost:3001/chat", {
-        credentials: "include",
-        method: "POST",
-        body: JSON.stringify(inputMessage),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        }
-      })
-      /**
-       
-      const response = await fetch("http://localhost:3001/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ message: inputMessage }),
-      });
-      */
+          method: "POST",
+          body: JSON.stringify({message : inputMessage}),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": `Bearer ${token}`,
+            },
+             credentials: "include",
+       })
 
       if (!response.ok && response.status !== 401) {
         throw new Error(`Failed to send message: ${response.statusText}`);
@@ -83,7 +70,7 @@ function Chat() {
       const data = await response.json();
       setChatHistory((prevHistory) => [
         ...prevHistory,
-        { role: "bot", content: data.response },
+        { role: "user", userMessage: inputMessage, botReply: data.response, timestamp: new Date().toISOString() },
       ]);
     } catch (error) {
       console.error("Error sending message:", error);
@@ -106,11 +93,11 @@ function Chat() {
       <div className="botContainer">
         {chatHistory?.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>
-            <p className="messageContent">{message.userMessage}</p>{" "}
+            <p className="messageContent">{message.userMessage}</p>
             {/* Render user message */}
-            <p className="messageContent">{message.botReply}</p>{" "}
+            <p className="messageContent">{message.botReply}</p>
             {/* Render bot reply */}
-            <span className="messageTime">{message.timestamp}</span>{" "}
+            <span className="messageTime">{message.timestamp}</span>
             {/* Render timestamp */}
           </div>
         ))}

@@ -2,7 +2,6 @@ import "dotenv/config";
 import OpenAI from "openai";
 import Chat from "../model/chatSchema.js";
 
-
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 
@@ -17,12 +16,6 @@ export const chat = async (req, res, next) => {
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: message }],
     });
-
-    /*
-    console.log(req.user);
-    console.log("User:", req.user);
-    console.log("Response from OpenAI:", response);
-    */
     
     // Save the user's message and the chatbot's reply to the database
     const newChat = new Chat({ 

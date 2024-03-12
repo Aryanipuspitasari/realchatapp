@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded( { extended : true } ) );
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: [ "http://localhost:5174"] }));
+app.use(cors({ credentials: true, origin: [ "http://localhost:5176"] }));
 connect();
 
 // R O U T E S

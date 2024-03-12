@@ -23,16 +23,25 @@ export const signup = async (req, res, next) => {
     await user.save();
 
     // CREATE TOKEN WITH USERNAME AND USERID
-    const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
-    
-    res.cookie("token", token, {httpOnly : true, secure : true})
-    res.status(201).json({ message: "New user created successfully!", token });
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      secretKey,
+      { expiresIn: "24h" }
+    );
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Lax",
+      })
+      .status(201)
+      .json({ message: "New user created successfully!", token });
   } catch (error) {
     console.error("Error during signup", error);
     next(error);
   }
 };
-
 
 export const login = async (req, res, next) => {
   try {
@@ -41,7 +50,9 @@ export const login = async (req, res, next) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(401).json({ message: "User not found or invalid credentials" });
+      return res
+        .status(401)
+        .json({ message: "User not found or invalid credentials" });
     }
 
     const isPasswordValid = await comparePassword(password, user.password);
@@ -51,16 +62,27 @@ export const login = async (req, res, next) => {
     }
 
     // CREATE TOKEN WITH USERNAME AND USERID
-    const token = jwt.sign({id : user._id, username : user.username}, secretKey, { expiresIn : "24h"})
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      secretKey,
+      { expiresIn: "24h" }
+    );
 
-    res.cookie("token", token, {httpOnly : true, secure : true}).status(200).json({ message: "Login successful" , token});
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Lax",
+      })
+      .status(200)
+      .json({ message: "Login successful", token });
   } catch (error) {
     console.error("Error during login", error);
     next(error);
   }
 };
 
-export const getUsers = async(req, res, next) =>{
+export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
     res.status(200).json(users);

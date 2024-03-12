@@ -16,7 +16,7 @@ function StartSite() {
   return (
     <>
       {isLoggedIn ? (
-        <Main />
+        <Main/>
       ) : (
         <div className="startContainer">
           <Header />

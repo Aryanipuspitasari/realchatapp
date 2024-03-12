@@ -17,7 +17,7 @@ function Main() {
     <div className="mainContainer">
 
       <header className="mainHeader">
-        <h1>Hai {username}</h1>
+        <h1>Hello, {username}.</h1>
         <button onClick={handleLogout} className="logoutButton">
           X
         </button>
