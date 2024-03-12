@@ -8,13 +8,11 @@ function LoginForm() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LogInContext);
   const { setUsername } = useContext(UsernameContext);
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
 
-/*
-useEffect(() => {
-  fetchUsers();
-}, []);
-  
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const fetchUsers = async () => {
     try {
@@ -28,8 +26,6 @@ useEffect(() => {
       console.error("Error fetching users:", error);
     }
   };
-  */
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,34 +35,49 @@ useEffect(() => {
   const handleLogIn = async (event) => {
     event.preventDefault();
 
-    try {
-        const response = await fetch("http://localhost:3001/users/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            throw new Error("Failed to log in");
-        }
-
-        const data = await response.json();
-        // console.log(data);
-        const userName = formData.username;
-        setUsername(userName);
-
-        // Set token cookie after successful login
-        Cookies.set("token", data.token, { expires: 1 });
-        setIsLoggedIn(true);
-        clearTheForm();
-    } catch (error) {
-        console.error("Error during login:", error);
-        alert("Failed to log in. Please try again later.");
+    // Validate form fields
+    if (!formData.username || !formData.password) {
+      alert("Please fill in all fields");
+      return;
     }
-};
-  
+
+    // Find user by username
+    const user = users.find((user) => user.username === formData.username);
+
+
+    if (!user) {
+      alert("User not found");
+      clearTheForm()
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      const data = await response.json();
+      const userName = formData.username;
+      setUsername(userName);
+
+      // Set token cookie after successful login
+      Cookies.set("token", data.token, { expires: 1 });
+      setIsLoggedIn(true);
+      clearTheForm();
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("Failed to log in. Please try again later.");
+      clearTheForm();
+    }
+  };
 
   if (isLoggedIn) {
     return <Main />;

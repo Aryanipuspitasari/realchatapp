@@ -57,16 +57,6 @@ function SignUpForm() {
       return;
     }
 
-    // Check if the email already exists
-    // const existingUser = users.find((user) => user.email === formData.email);
-    // if (existingUser) {
-    //   alert(
-    //     "User with this email already exists. Please use a different email."
-    //   );
-    //   clearTheForm();
-    //   return;
-    // }
-
     try {
       const response = await fetch("http://localhost:3001/users/signup", {
         method: "POST",
