@@ -89,13 +89,10 @@ header h1 {
 .mainHeader {
   background-color: rgba(290, 204, 204, 0.1);
   padding: 10px;
-}
-
-.mainHeader h1 {
   text-align: center;
 }
 
-.mainHeader .logoutButton {
+.logoutButton {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -105,10 +102,10 @@ header h1 {
   border: none;
   background-color: #a7b6c5;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.mainHeader .logoutButton:hover {
+.logoutButton:hover {
   transform: scale(1.2);
 }
 
@@ -118,8 +115,6 @@ header h1 {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 5px;
 }
 
 .botContainer {
@@ -147,7 +142,7 @@ header h1 {
   font-size: 25px;
 }
 
-.chatForm .send-button {
+.send-button {
   border: none;
   border-radius: 5px;
   background-color: #a7b6c5;
@@ -159,7 +154,7 @@ header h1 {
   font-size: 25px;
 }
 
-.chatForm .send-button:hover {
+.send-button:hover {
   background-color: #8799a3;
   transform: scale(1.1);
 }
@@ -168,39 +163,38 @@ header h1 {
   padding: 8px;
   margin: 4px 0;
   border-radius: 8px;
- 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.message.user {
-  background-color: rgba(204, 230, 255, 0.2);
+ .user-message {
+  background-color: rgba(204, 230, 255, 0.5);
   align-self: flex-end;
   max-width: 65%;
-  font-size: 25px;
- display: flex;
- flex-direction: column;
- gap: 3px;
-}
-
-.message.bot {
-  background-color: rgba(240, 240, 240, 0.4);
-  align-self: flex-start;
-  max-width: 65%;
-  font-size: 25px;
+  font-size: 35px;
   display: flex;
   flex-direction: column;
   gap: 3px;
-}
+  padding: 10px;
+  border-radius: 10px;
+} 
 
-.message.bot span, 
-.message.user span{
-  font-size: 16px;
-}
-
-.message.bot .messageContent {
+ .bot-message {
+  background-color: rgba(210, 240, 240, 0.5);
   align-self: flex-start;
+  max-width: 65%;
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px;
+  border-radius: 10px;
+} 
+
+.message span {
+  font-size: 24px;
 }
 
-.message.bot .messageTime {
-  align-self: flex-end;
-  font-size: 16px;
-}
+
+

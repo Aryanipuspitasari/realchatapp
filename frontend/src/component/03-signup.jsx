@@ -49,11 +49,13 @@ function SignUpForm() {
     // Check minimum character requirements for username and password
     if (formData.username.length < 3) {
       alert("Username must be at least 3 characters long");
+      clearTheForm()
       return;
     }
 
     if (formData.password.length < 8) {
       alert("Password must be at least 8 characters long");
+      clearTheForm()
       return;
     }
 

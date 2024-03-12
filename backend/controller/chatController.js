@@ -24,7 +24,6 @@ export const chat = async (req, res, next) => {
       botReply: response.choices[0].message.content 
     });
     await newChat.save();
-    console.log("TEST CHAT CONTROLLER");
     res.status(200).json({ response: response.choices[0].message.content });
   } catch (error) {
     console.error("Error in chat controller:", error);

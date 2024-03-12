@@ -68,6 +68,8 @@ function Chat() {
       }
 
       const data = await response.json();
+
+      
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { role: "user", userMessage: inputMessage, botReply: data.response, timestamp: new Date().toISOString() },
@@ -93,9 +95,9 @@ function Chat() {
       <div className="botContainer">
         {chatHistory?.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>
-            <p className="messageContent">{message.userMessage}</p>
+            <p className="messageContent user-message">{message.userMessage}</p>
             {/* Render user message */}
-            <p className="messageContent">{message.botReply}</p>
+            <p className="messageContent bot-message">{message.botReply}</p>
             {/* Render bot reply */}
             <span className="messageTime">{message.timestamp}</span>
             {/* Render timestamp */}
