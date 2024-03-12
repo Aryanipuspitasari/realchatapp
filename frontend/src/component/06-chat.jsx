@@ -23,7 +23,7 @@ function Chat() {
 
       const response = await fetch("http://localhost:3001/chat", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         credentials: "include",
       });
@@ -43,9 +43,6 @@ function Chat() {
   };
 
   const handleSendMessage = async () => {
-    if (!inputMessage.trim()) {
-      return;
-    }
 
     try {
       const token = Cookies.get("token");
@@ -53,14 +50,26 @@ function Chat() {
         throw new Error("Token not found in cookies");
       }
 
+
+      const response = await fetch("http://localhost:3001/chat", {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify(inputMessage),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        }
+      })
+      /**
+       
       const response = await fetch("http://localhost:3001/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({ message: inputMessage }),
       });
+      */
 
       if (!response.ok && response.status !== 401) {
         throw new Error(`Failed to send message: ${response.statusText}`);

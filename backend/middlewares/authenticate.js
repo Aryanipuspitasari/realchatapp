@@ -6,7 +6,7 @@ const secretKey = process.env.SECRET_ACCESS_TOKEN;
 
 export const authenticate = (req, res, next) => {
     const token = req.cookies.token;
-
+    console.log("MIDDLEWARE AUTHENTICATE");
      if(!token){
      return res.status(402).send("Access denied. Unauthenticated");
     }
