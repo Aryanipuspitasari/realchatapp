@@ -35,13 +35,13 @@ function LoginForm() {
   const handleLogIn = async (event) => {
     event.preventDefault();
 
-    // Validate form fields
+    // VALIDATE FORM FIELDS
     if (!formData.username || !formData.password) {
       alert("Please fill in all fields");
       return;
     }
 
-    // Find user by username
+    // FIND USER AND VALIDATE EXISTING USER
     const user = users.find((user) => user.username === formData.username);
 
 
@@ -68,7 +68,7 @@ function LoginForm() {
       const userName = formData.username;
       setUsername(userName);
 
-      // Set token cookie after successful login
+      // SET TOKEN AFTER LOG IN SUCCESSFUL
       Cookies.set("token", data.token, { expires: 1 });
       setIsLoggedIn(true);
       clearTheForm();

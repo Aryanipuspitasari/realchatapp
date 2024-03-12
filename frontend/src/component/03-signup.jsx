@@ -40,19 +40,20 @@ function SignUpForm() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    // Check if the form is fully filled
+    // VALIDATE THE FORM FULLY FILLED
     if (!formData.username || !formData.email || !formData.password) {
       alert("Please fill all the fields");
       return;
     }
 
-    // Check minimum character requirements for username and password
+    // VALIDATE MIN CHARACTER USERNAME
     if (formData.username.length < 3) {
       alert("Username must be at least 3 characters long");
       clearTheForm()
       return;
     }
 
+    // VALIDATE MIN CHARACTER PASSWORD
     if (formData.password.length < 8) {
       alert("Password must be at least 8 characters long");
       clearTheForm()
@@ -79,7 +80,7 @@ function SignUpForm() {
       const userName = formData.username;
       setUsername(userName);
 
-      // Set token cookie after successful signup
+      // SET COOKIE AFTER SIGN UP SUCCESSFULLY
       Cookies.set("token", data.token, { expires: 1 });
       setIsLoggedIn(true);
       setIsSignedUp(true);

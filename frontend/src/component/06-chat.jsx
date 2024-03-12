@@ -47,7 +47,6 @@ function Chat() {
         throw new Error("Token not found in cookies");
       }
 
-
       const response = await fetch("http://localhost:3001/chat", {
           method: "POST",
           body: JSON.stringify({message : inputMessage}),
@@ -96,11 +95,11 @@ function Chat() {
         {chatHistory?.map((message, index) => (
           <div key={index} className={`message ${message.role}`}>
             <p className="messageContent user-message">{message.userMessage}</p>
-            {/* Render user message */}
+            {/* RENDER USER MESSAGE */}
             <p className="messageContent bot-message">{message.botReply}</p>
-            {/* Render bot reply */}
+            {/* RENDER BOT REPLY */}
             <span className="messageTime">{message.timestamp}</span>
-            {/* Render timestamp */}
+            {/* RENDER TIME STAMP */}
           </div>
         ))}
       </div>

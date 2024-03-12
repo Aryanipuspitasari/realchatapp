@@ -17,7 +17,7 @@
 
 /* HEADER */
 header h1 {
-  font-size: 3rem;
+  font-size: 5rem;
 }
 
 /* FORM */
@@ -32,12 +32,14 @@ header h1 {
 
 .signUpLogInForm h2 {
   margin-bottom: 15px;
+  font-size: 40px;
 }
 
 .signUpLogInForm label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  font-size: 26px;
 }
 
 .signUpLogInForm input {
@@ -46,6 +48,7 @@ header h1 {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 26px
 }
 
 .signUpLogInForm button {
@@ -57,6 +60,7 @@ header h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 26px
 }
 
 .signUpLogInForm button:hover {
@@ -75,6 +79,7 @@ header h1 {
   border-radius: 5px;
   cursor: pointer;
   background-color: #a7b6c5;
+  font-size: 26px
 }
 
 /* MAIN CONTAINER */
