@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded( { extended : true } ) );
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: [ "http://localhost:5176"] }));
+app.use(cors({ credentials: true, origin: [ "http://localhost:5177"] }));
 connect();
 
 // R O U T E S
@@ -35,4 +35,4 @@ app.use("*", invalidRoute);
 app.use(errorHandler);
 
 
-app.listen(PORT, () => console.log('The server is listening... 🎥', PORT ));
+app.listen(PORT, () => console.log(`The server is listening http://localhost:${PORT}... 🎥`, PORT ));
