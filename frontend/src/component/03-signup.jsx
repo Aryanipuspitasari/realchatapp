@@ -15,13 +15,10 @@ function SignUpForm() {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [users, setUsers] = useState([]);
 
-  
-   
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:3001/users");
@@ -34,7 +31,6 @@ function SignUpForm() {
       console.error("Error fetching users:", error);
     }
   };
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -44,15 +40,32 @@ function SignUpForm() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    // Check if the email already exists
-    const existingUser = users.find((user) => user.email === formData.email);
-    if (existingUser) {
-      alert(
-        "User with this email already exists. Please use a different email."
-      );
-      clearTheForm();
+    // Check if the form is fully filled
+    if (!formData.username || !formData.email || !formData.password) {
+      alert("Please fill all the fields");
       return;
     }
+
+    // Check minimum character requirements for username and password
+    if (formData.username.length < 3) {
+      alert("Username must be at least 3 characters long");
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      alert("Password must be at least 8 characters long");
+      return;
+    }
+
+    // Check if the email already exists
+    // const existingUser = users.find((user) => user.email === formData.email);
+    // if (existingUser) {
+    //   alert(
+    //     "User with this email already exists. Please use a different email."
+    //   );
+    //   clearTheForm();
+    //   return;
+    // }
 
     try {
       const response = await fetch("http://localhost:3001/users/signup", {
@@ -62,18 +75,20 @@ function SignUpForm() {
         },
         body: JSON.stringify(formData),
       });
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error("SIGN UP FAILED.");
+        const errorMessage = data.message || "Signup failed";
+        alert(errorMessage);
+        throw new Error(errorMessage);
       }
 
-      const data = await response.json();
       alert(data.message);
       const userName = formData.username;
       setUsername(userName);
 
       // Set token cookie after successful signup
-      Cookies.set('token', data.token, { expires: 1 });
+      Cookies.set("token", data.token, { expires: 1 });
       setIsLoggedIn(true);
       setIsSignedUp(true);
       clearTheForm();
@@ -96,7 +111,7 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSignUp} className ="signUpLogInForm">
+    <form onSubmit={handleSignUp} className="signUpLogInForm">
       <h2>Sign Up</h2>
       <label>
         Username:
