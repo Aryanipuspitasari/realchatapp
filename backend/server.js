@@ -26,6 +26,11 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: [ "http://localhost:5173"] }));
 connect();
 
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+})
 // R O U T E S
 app.use("/users", userRouter);
 app.use("/chat", chatRouter)

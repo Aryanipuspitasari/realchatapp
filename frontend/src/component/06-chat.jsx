@@ -21,7 +21,7 @@ function Chat() {
         throw new Error("Token not found in cookies");
       }
 
-      const response = await fetch("http://localhost:3001/chat", {
+      const response = await fetch("/chat", {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ function Chat() {
         throw new Error("Token not found in cookies");
       }
 
-      const response = await fetch("http://localhost:3001/chat", {
+      const response = await fetch("/chat", {
           method: "POST",
           body: JSON.stringify({message : inputMessage}),
           headers: {
