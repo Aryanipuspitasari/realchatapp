@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 // IMPORT MIDDLEWARE
 import {errorHandler} from "./middlewares/errorHandler.js";
