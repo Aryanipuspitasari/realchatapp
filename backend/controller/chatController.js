@@ -34,7 +34,7 @@ export const chat = async (req, res, next) => {
 
 export const getUserConversations = async (req, res, next) => {
   try {
-    const conversations = await Chat.find({ user: req.user.id });
+    const conversations = await Chat.find({ user: req.user.id }).populate("user");
     res.status(200).json( conversations );
   } catch (error) {
     console.error("Error fetching user conversations:", error);
