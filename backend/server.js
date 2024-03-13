@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
+import { dirname, path } from "path";
+import { fileURLToPath } from "url";
 
 // IMPORT MIDDLEWARE
 import {errorHandler} from "./middlewares/errorHandler.js";
@@ -26,6 +28,8 @@ app.use(express.urlencoded( { extended : true } ) );
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: [ "http://localhost:5173"] }));
 connect();
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
