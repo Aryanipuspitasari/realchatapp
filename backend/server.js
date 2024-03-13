@@ -26,10 +26,10 @@ app.use(cookieParser());
 app.use(cors({ credentials: true, origin: [ "http://localhost:5173"] }));
 connect();
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname + "/../frontend/build/index.html"));
+  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
 })
 // R O U T E S
 app.use("/users", userRouter);
