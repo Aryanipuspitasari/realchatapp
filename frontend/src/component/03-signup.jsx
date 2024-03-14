@@ -29,12 +29,12 @@ function SignUpForm() {
     }
   };
 
-  const newFetchUsers = () => {
-    fetch("https://realchatapp-1.onrender.com/users/")
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log("Error", error));
-  }
+  // const newFetchUsers = () => {
+  //   fetch("https://realchatapp-1.onrender.com/users/")
+  //     .then((res) => res.json())
+  //     .then((data) => console.log(data))
+  //     .catch((error) => console.log("Error", error));
+  // }
     
     
 
@@ -147,7 +147,7 @@ function SignUpForm() {
         <button type="submit">Sign Up</button>
       </form>
 
-      <button onClick={newFetchUsers}>Test</button>
+      {/* <button onClick={newFetchUsers}>Test</button> */}
     </div>
   );
 }
