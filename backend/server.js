@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(cors({ credentials: true }));
 connect();
 
-app.get("/users",  getUsers)
+app.get("/users", getUsers);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
@@ -43,7 +43,6 @@ app.get("*", (req, res) => {
 app.use("/users", userRouter);
 app.use("/chat", chatRouter);
 app.use("*", invalidRoute);
-
 
 // M I D D L E W A R E
 app.use(errorHandler);

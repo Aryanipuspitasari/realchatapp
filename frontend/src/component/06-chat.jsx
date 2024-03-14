@@ -16,6 +16,8 @@ function Chat() {
   const fetchChatHistory = async () => {
     try {
       const token = Cookies.get("token");
+      console.log("All cookies:", Cookies.get()); 
+      console.log("Token:", token); 
 
       if (!token) {
         throw new Error("Token not found in cookies");
