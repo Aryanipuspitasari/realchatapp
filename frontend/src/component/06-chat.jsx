@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { LogInContext } from "../context/LogInContext.jsx";
 
 function Chat() {
@@ -13,14 +13,28 @@ function Chat() {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    // Check if user is logged in and set authorization token
+    if (isLoggedIn) {
+      setAuthorizationToken();
+    }
+  }, [isLoggedIn]);
+
+
   const fetchChatHistory = async () => {
     try {
-      const token = Cookies.get("token");
-      console.log("All cookies:", Cookies.get()); 
-      console.log("Token:", token); 
+      // const token = Cookies.get("token");
+      // console.log("All cookies:", Cookies.get()); 
+      // console.log("Token:", token); 
+
+      // if (!token) {
+      //   throw new Error("Token not found in cookies");
+      // }
+
+      const token = localStorage.getItem("token");
 
       if (!token) {
-        throw new Error("Token not found in cookies");
+        throw new Error("Token not found in local storage");
       }
 
       const response = await fetch("/chat", {
@@ -44,9 +58,15 @@ function Chat() {
   const handleSendMessage = async () => {
 
     try {
-      const token = Cookies.get("token");
+      // const token = Cookies.get("token");
+      // if (!token) {
+      //   throw new Error("Token not found in cookies");
+      // }
+
+      const token = localStorage.getItem("token");
+
       if (!token) {
-        throw new Error("Token not found in cookies");
+        throw new Error("Token not found in local storage");
       }
 
       const response = await fetch("/chat", {
@@ -91,6 +111,15 @@ function Chat() {
     setInputMessage(event.target.value);
   };
 
+  const setAuthorizationToken = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      fetch.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete fetch.defaults.headers.common["Authorization"];
+    }
+  };
   return (
     <div className="chatContainer">
       <div className="botContainer">
