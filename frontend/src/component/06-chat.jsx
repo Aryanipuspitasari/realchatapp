@@ -15,19 +15,21 @@ function Chat() {
 
   const fetchChatHistory = async () => {
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        .split("=")[1];
-      console.log("Token:", token);
-
-      if (!token) {
+      // const token = Cookies.get("token");
+      const cookieString = document.cookie;
+      const tokenCookie = cookieString.split("; ").find(row => row.startsWith("token="));
+      
+      if (!tokenCookie) {
         throw new Error("Token not found in cookies");
       }
 
+      const token = tokenCookie.split("=")[1];
+    console.log("Token:", token);
+
+
       const response = await fetch("/chat", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         credentials: "include",
       });
@@ -44,31 +46,27 @@ function Chat() {
   };
 
   const handleSendMessage = async () => {
-    try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        .split("=")[1];
-      console.log("Token:", token);
 
+    try {
+      const token = Cookies.get("token");
       if (!token) {
         throw new Error("Token not found in cookies");
       }
 
       const response = await fetch("/chat", {
-        method: "POST",
-        body: JSON.stringify({ message: inputMessage }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
+          method: "POST",
+          body: JSON.stringify({message : inputMessage}),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": `Bearer ${token}`,
+            },
+             credentials: "include",
+       })
 
       if (!response.ok && response.status !== 401) {
         throw new Error(`Failed to send message: ${response.statusText}`);
       }
-
+      
       if (response.status === 401) {
         console.error("Authentication error while sending message");
         return;
@@ -76,14 +74,10 @@ function Chat() {
 
       const data = await response.json();
 
+      
       setChatHistory((prevHistory) => [
         ...prevHistory,
-        {
-          role: "user",
-          userMessage: inputMessage,
-          botReply: data.response,
-          timestamp: new Date().toISOString(),
-        },
+        { role: "user", userMessage: inputMessage, botReply: data.response, timestamp: new Date().toISOString() },
       ]);
     } catch (error) {
       console.error("Error sending message:", error);
