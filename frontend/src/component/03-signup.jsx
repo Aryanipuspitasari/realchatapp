@@ -3,6 +3,7 @@ import { UsernameContext } from "../context/UsernameContext.jsx";
 import { LogInContext } from "../context/LogInContext.jsx";
 import Main from "./05-main.jsx";
 import Cookies from "js-cookie";
+import { response } from "express";
 
 function SignUpForm() {
   const { setUsername } = useContext(UsernameContext);
@@ -27,6 +28,15 @@ function SignUpForm() {
       console.error("Error fetching users:", error);
     }
   };
+
+  const newFetchUsers = () => {
+    fetch("https://realchatapp-1.onrender.com/users/")
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log("Error", error));
+  }
+    
+    
 
   useEffect(() => {
     fetchUsers();
@@ -137,7 +147,7 @@ function SignUpForm() {
         <button type="submit">Sign Up</button>
       </form>
 
-      <button onClick={fetchUsers}>Test</button>
+      <button onClick={newFetchUsers}>Test</button>
     </div>
   );
 }
