@@ -36,18 +36,15 @@ connect();
 
 app.get("/users", getUsers);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
-});
-
-app.get("/users", getUsers);
 
 // R O U T E S
 app.use("/users", userRouter);
-app.get("/users", getUsers);
 app.use("/chat", chatRouter);
-app.get("/users", getUsers);
 app.use("*", invalidRoute);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
+});
 
 // M I D D L E W A R E
 app.use(errorHandler);
