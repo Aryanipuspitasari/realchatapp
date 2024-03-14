@@ -33,7 +33,7 @@ export const signup = async (req, res, next) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
+        sameSite: "none",
       })
       .status(201)
       .json({ message: "New user created successfully!", token });
@@ -72,7 +72,7 @@ export const login = async (req, res, next) => {
       .cookie("token", token, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
+        sameSite: "node",
       })
       .status(200)
       .json({ message: "Login successful", token });
