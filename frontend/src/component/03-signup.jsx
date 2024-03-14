@@ -3,7 +3,7 @@ import { UsernameContext } from "../context/UsernameContext.jsx";
 import { LogInContext } from "../context/LogInContext.jsx";
 import Main from "./05-main.jsx";
 import Cookies from "js-cookie";
-import { response } from "express";
+
 
 function SignUpForm() {
   const { setUsername } = useContext(UsernameContext);
@@ -31,7 +31,7 @@ function SignUpForm() {
 
   const newFetchUsers = () => {
     fetch("https://realchatapp-1.onrender.com/users/")
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => console.log(data))
       .catch((error) => console.log("Error", error));
   }
