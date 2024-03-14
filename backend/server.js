@@ -29,13 +29,14 @@ app.use(cookieParser());
 app.use(cors({ credentials: true }));
 connect();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
+// });
+
 // R O U T E S
 app.use("/users", userRouter);
 app.use("/chat", chatRouter);
