@@ -21,6 +21,9 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // MIDDLEWARE USE
 app.use(express.json());
@@ -29,9 +32,6 @@ app.use(cookieParser());
 app.use(cors({ credentials: true }));
 connect();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
