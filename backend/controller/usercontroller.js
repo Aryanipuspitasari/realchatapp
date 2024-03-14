@@ -84,8 +84,8 @@ export const login = async (req, res, next) => {
 
 export const getUsers = async (req, res, next) => {
   try {
+    console.log("GET USERS CONTROLLER");
     const users = await User.find();
-    console.log(users);
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
