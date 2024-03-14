@@ -14,7 +14,7 @@ function SignUpForm() {
   });
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [users, setUsers] = useState([]);
-  
+
   const fetchUsers = async () => {
     try {
       const response = await fetch("https://realchatapp-1.onrender.com/users/");
@@ -27,10 +27,10 @@ function SignUpForm() {
       console.error("Error fetching users:", error);
     }
   };
-  
-    useEffect(() => {
-      fetchUsers();
-    }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -49,14 +49,14 @@ function SignUpForm() {
     // VALIDATE MIN CHARACTER USERNAME
     if (formData.username.length < 3) {
       alert("Username must be at least 3 characters long");
-      clearTheForm()
+      clearTheForm();
       return;
     }
 
     // VALIDATE MIN CHARACTER PASSWORD
     if (formData.password.length < 8) {
       alert("Password must be at least 8 characters long");
-      clearTheForm()
+      clearTheForm();
       return;
     }
 
@@ -104,37 +104,41 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSignUp} className="signUpLogInForm">
-      <h2>Sign Up</h2>
-      <label>
-        Username:
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-      </label>
-      <button type="submit">Sign Up</button>
-    </form>
+    <div>
+      <form onSubmit={handleSignUp} className="signUpLogInForm">
+        <h2>Sign Up</h2>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+        </label>
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <button onClick={fetchUsers}>Test</button>
+    </div>
   );
 }
 
