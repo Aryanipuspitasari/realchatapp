@@ -7,11 +7,11 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 // IMPORT MIDDLEWARE
-import {errorHandler} from "./middlewares/errorHandler.js";
-import {invalidRoute} from "./routes/invalidRoute.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { invalidRoute } from "./routes/invalidRoute.js";
 
 // IMPORT CONNECT
-import {connect} from "./connect.js"
+import { connect } from "./connect.js";
 
 // IMPORT ROUTES
 import userRouter from "./routes/userroute.js";
@@ -24,25 +24,26 @@ const PORT = process.env.PORT || 8000;
 
 // MIDDLEWARE USE
 app.use(express.json());
-app.use(express.urlencoded( { extended : true } ) );
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({ credentials: true }));
 connect();
 
-// const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-// app.get('*',(req,res)=>{
-//   res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
-// })
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../frontend/dist/index.html"));
+});
 // R O U T E S
 app.use("/users", userRouter);
-app.use("/chat", chatRouter)
+app.use("/chat", chatRouter);
 app.use("*", invalidRoute);
 
 // M I D D L E W A R E
 app.use(errorHandler);
 
-
-app.listen(PORT, () => console.log(`The server is listening http://localhost:${PORT}... 🎥`, PORT ));
+app.listen(PORT, () =>
+  console.log(`The server is listening http://localhost:${PORT}... 🎥`, PORT)
+);

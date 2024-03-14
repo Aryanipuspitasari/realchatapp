@@ -16,7 +16,7 @@ function LoginForm() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("/users");
+      const response = await fetch("/users/");
       console.log(response);
       if (!response.ok) {
         throw new Error("Failed to fetch users");
