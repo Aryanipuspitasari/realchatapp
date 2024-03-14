@@ -7,11 +7,11 @@ const userRouter = express.Router();
 
 userRouter
 .route("/")
+.get(getUsers);
 
 userRouter
 .route("/signup")
 .post(userValidator, validateRequest, signup)
-.get(getUsers);
 
 userRouter
 .route("/login")
